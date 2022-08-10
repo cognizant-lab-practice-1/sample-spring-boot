@@ -7,7 +7,7 @@ pipeline {
         EKS_CLUSTER_NAME = "demo-cluster"
     }
     stages {
-        stage('build') {
+        stage('Build') {
             agent {
                 docker { image 'openjdk:11-jdk' }
             }
@@ -16,10 +16,12 @@ pipeline {
             }
         }
         stage('SonarQube') {
-        agent {
-            docker { image '<some sonarcli image>' } }
+            agent {
+                docker { image 'sonarsource/sonar-scanner-cli:latest' }
+            }
             steps {
-                sh 'echo scanning!'
+                echo 'Sonaqube step'
+                sh 'sonar-scanner'
             }
         }
         stage('Docker Build') {
