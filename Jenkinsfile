@@ -25,8 +25,13 @@ pipeline {
             }
         }
         stage('Docker Build') {
+            agent any
             steps {
                 sh 'echo docker build'
+
+                script {
+                    image = docker.build("$ENV_DOCKER_USR/$DOCKERIMAGE")
+                }
             }
         }
         stage('Docker Push') {
