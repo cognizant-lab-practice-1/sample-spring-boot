@@ -2,11 +2,12 @@ pipeline {
     agent none
         environment {
         ENV_DOCKER = credentials('dockerhub')
-        DOCKERIMAGE = "dummy/dummy"
+        SONAR_TOKEN = credentials('sonar')
+        DOCKERIMAGE = "cog-lab-practice-one"
         EKS_CLUSTER_NAME = "demo-cluster"
     }
     stages {
-        stage('Code Build') {
+        stage('build') {
             agent {
                 docker { image 'openjdk:11-jdk' }
             }
