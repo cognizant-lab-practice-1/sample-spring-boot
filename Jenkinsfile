@@ -6,7 +6,7 @@ pipeline {
         EKS_CLUSTER_NAME = "demo-cluster"
     }
     stages {
-        stage('build') {
+        stage('Code Build') {
             agent {
                 docker { image 'openjdk:11-jdk' }
             }
@@ -14,19 +14,19 @@ pipeline {
                 sh 'chmod +x gradlew && ./gradlew build jacocoTestReport'
             }
         }
-        stage('sonarqube') {
+        stage('SonarQube') {
         agent {
             docker { image '<some sonarcli image>' } }
             steps {
                 sh 'echo scanning!'
             }
         }
-        stage('docker build') {
+        stage('Docker Build') {
             steps {
                 sh 'echo docker build'
             }
         }
-        stage('docker push') {
+        stage('Docker Push') {
             steps {
                 sh 'echo docker push!'
                 }
@@ -35,5 +35,6 @@ pipeline {
             steps {
                 sh 'echo deploy to kubernetes'               
             }
+        }
     }
 }
