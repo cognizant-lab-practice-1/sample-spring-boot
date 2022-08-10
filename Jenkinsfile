@@ -35,10 +35,18 @@ pipeline {
             }
         }
         stage('Docker Push') {
+            agent any
             steps {
                 sh 'echo docker push!'
+
+                script {
+                    docker.withRegistry('', 'dockerhub') {
+                        image.push("$BUILD_ID")
+                        image.push('latest')
+                    }
                 }
             }
+        }
         stage('Deploy App') {
             steps {
                 sh 'echo deploy to kubernetes'               
